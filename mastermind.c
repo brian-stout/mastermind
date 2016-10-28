@@ -4,7 +4,7 @@
 #include <time.h>
 
 void compare(int number[], char guess[]);
-int user_input(int number[]);
+void user_input(int number[]);
 
 int main(void)
 {
@@ -21,7 +21,7 @@ int main(void)
 }
 
 
-int user_input(int number[])
+void user_input(int number[])
 {
 	char guess[8];
 	printf("Enter your guess: ");
@@ -33,17 +33,12 @@ int user_input(int number[])
 		else{
 			printf("Please enter a four digit number: ");
 		}
-
 	}
-		//Turns the unicode character to it's appropiate number
+	//Turns the unicode character to it's appropiate number
 	guess[4] = '\0';
 	for(int i = 0; i < 4; ++i){
 		guess[i] -= '0';
 	}
-	printf("Debug guess[0]:%d\n", guess[0]);
-	printf("Debug guess[1]:%d\n", guess[1]);
-	printf("Debug guess[2]:%d\n", guess[2]);
-	printf("Debug guess[3]:%d\n", guess[3]);
 	compare(number, guess);
 
 }
@@ -53,9 +48,18 @@ void compare(int number[], char guess[])
 {
 	int red = 0;
 	int white = 0;
+	int mask[] = {0,0,0,0};
 	for(int i = 0; i < 4; ++i){
 		if(number[i] == guess[i]){
 			++red;
+			mask[i] = 1;
+		}
+	}
+	for(int i = 0; i < 4; ++i){
+		for(int j = 0; j < 4; ++j){
+			if((number[j] == guess[i]) && (mask[i] == 0)){
+				++white;
+			}
 		}
 	}
 	printf("%d red, ", red);
