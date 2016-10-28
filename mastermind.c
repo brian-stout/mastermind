@@ -15,7 +15,6 @@ int main(void)
 	for(int i = 0; i < 4 ; ++i){
 		number[i] = rand() % 10;
 	}
-	printf("The number is %d%d%d%d \n", number[0],number[1],number[2],number[3]);
 	guess_count = user_input(number);
 	printf("Congratulations!  You guessed the correct number in %d "
 		   "attempts!\n", guess_count);
@@ -30,22 +29,24 @@ int user_input(int number[])
 	char guess[8];
 	int cont = 1;
 	int guess_count = 0;
-	printf("Enter your guess: ");
+
 	while(cont){
+		printf("The number is %d%d%d%d \n", number[0],number[1],number[2],number[3]);
+		printf("Enter your guess: ");
 		fgets(guess, sizeof(guess), stdin);
 		if(strlen(guess) == 5){
-			break;
+			//Turns the unicode character to it's appropiate number
+			guess[4] = '\0';
+			for(int i = 0; i < 4; ++i){
+				guess[i] -= '0';
+			}
+			++guess_count; 
+			cont = compare(number, guess);
 		}
 		else{
-			printf("Please enter a four digit number: ");
+			printf("Character must be 4 digits\n");
 		}
-		//Turns the unicode character to it's appropiate number
-		guess[4] = '\0';
-		for(int i = 0; i < 4; ++i){
-			guess[i] -= '0';
-		}
-		++guess_count; 
-		cont = compare(number, guess);
+
 	}
 	return guess_count;
 
