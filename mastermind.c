@@ -24,7 +24,7 @@ int main(void)
 
 }
 
-
+//TODO: to fix this garbage check to see if the numbers are equal in this function to not do the compare, will probably simplify things but confuse other stuff
 int user_input(int number[])
 {
 	char guess[8];
