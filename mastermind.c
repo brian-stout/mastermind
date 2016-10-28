@@ -13,10 +13,6 @@ int main(void)
 	for(int i = 0; i < 4 ; ++i){
 		number[i] = rand() % 10;
 	}
-	number[0] = 2;
-	number[1] = 3;
-	number[2] = 4;
-	number[3] = 5;
 	printf("The number is %d%d%d%d \n", number[0],number[1],number[2],number[3]);
 	user_input(number);
 
@@ -27,21 +23,29 @@ int main(void)
 
 int user_input(int number[])
 {
-	char guess[5];
+	char guess[8];
 	printf("Enter your guess: ");
-	fgets(guess, sizeof(guess), stdin);
-	printf("Debug: guess is currently %s \n", guess);
-	printf("Debug: guess is this long %zd \n", strlen(guess));
-	if(strlen(guess) != 4){
-		printf("\nEnter a four digit number \n");
-		return 0;
+	while(1){
+		fgets(guess, sizeof(guess), stdin);
+		if(strlen(guess) == 5){
+			break;
+		}
+		else{
+			printf("Please enter a four digit number: ");
+		}
+
 	}
-	else{
-		guess[4] = '\0';
-		printf("debug: this is guess %s \n", guess);
-		//compare(number, guess);
+		//Turns the unicode character to it's appropiate number
+	guess[4] = '\0';
+	for(int i = 0; i < 4; ++i){
+		guess[i] -= '0';
 	}
-	
+	printf("Debug guess[0]:%d\n", guess[0]);
+	printf("Debug guess[1]:%d\n", guess[1]);
+	printf("Debug guess[2]:%d\n", guess[2]);
+	printf("Debug guess[3]:%d\n", guess[3]);
+	compare(number, guess);
+
 }
 
 
