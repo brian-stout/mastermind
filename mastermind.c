@@ -4,13 +4,16 @@
 #include <time.h>
 
 
-int compare(int number[], char guess[]);
-int user_input(int number[]);
+int compare(int number[], int guess[]);
+void user_input(int *px);
 
 int main(void)
 {
+	int cont = 1;
 	int guess_count = 0;
-	int number[4] = {5,3,5,5};
+	int number[4] = {8,0,6,8};
+	int guess[4], *guess_ptr;
+	guess_ptr = guess;
 /*
 	srand(time(NULL));
 
@@ -19,24 +22,28 @@ int main(void)
 	}
 
 */
-	guess_count = user_input(number);
+
+	while(cont){
+		++guess_count;
+		user_input(guess_ptr);
+		printf("%d%d%d%d\n", guess[0], guess[1], guess[2], guess[3]);
+		cont = compare(number, guess);
+	}
+
 //TODO: Fix the grammar and stuffs
 	printf("Congratulations!  You guessed the correct number in %d "
 		   "attempts!\n", guess_count);
 
-
+ 
 
 }
 
-//TODO: to fix this garbage check to see if the numbers are equal in this function to not do the compare, will probably simplify things but confuse other stuff
-int user_input(int number[])
+void user_input(int *px)
 {
 	char guess[8];
 	int cont = 1;
-	int guess_count = 0;
 
 	while(cont){
-		printf("The number is %d%d%d%d \n", number[0],number[1],number[2],number[3]);
 		printf("Enter your guess: ");
 		fgets(guess, sizeof(guess), stdin);
 		if(strlen(guess) == 5){
@@ -45,20 +52,21 @@ int user_input(int number[])
 			for(int i = 0; i < 4; ++i){
 				guess[i] -= '0';
 			}
-			++guess_count; 
-			cont = compare(number, guess);
+			//assigns the int array's ptr that was passed in the function the correct values
+			px[0] = guess[0];
+			px[1] = guess[1];
+			px[2] = guess[2];
+			px[3] = guess[3];
+			cont = 0;
 		}
 		else{
 			printf("Character must be 4 digits\n");
 		}
 	}
-	return guess_count;
-
-
 }
 
 
-int compare(int number[], char guess[])
+int compare(int number[], int guess[])
 {
 	int red = 0;
 	int white = 0;
@@ -95,6 +103,8 @@ int compare(int number[], char guess[])
 				}
 			}
 		}
+		printf("Number: %d%d%d%d \n", number[0],number[1],number[2],number[3]);
+		printf("Guess:  %d%d%d%d \n", guess[0],guess[1],guess[2],guess[3]);
 		printf("%d red, ", red);
 		printf("%d white\n", white);
 		return 1;
@@ -102,7 +112,6 @@ int compare(int number[], char guess[])
 	else{
 		return 0;
 	}
-
 }
 
 
