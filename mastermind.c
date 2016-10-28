@@ -10,12 +10,17 @@ int user_input(int number[]);
 int main(void)
 {
 	int guess_count = 0;
-	int number[4];
+	int number[4] = {6,1,5,8};
+/*
 	srand(time(NULL));
+
 	for(int i = 0; i < 4 ; ++i){
 		number[i] = rand() % 10;
 	}
+*/
+
 	guess_count = user_input(number);
+//TODO: Fix the grammar and stuffs
 	printf("Congratulations!  You guessed the correct number in %d "
 		   "attempts!\n", guess_count);
 
@@ -67,25 +72,32 @@ int compare(int number[], char guess[])
 			cont = 1;
 		}
 	}
-	//Tests for reds, and set mask position to 1 to make that digit off limits
-	for(int i = 0; i < 4; ++i){
-		if(number[i] == guess[i]){
-			++red;
-			mask[i] = 1;
-		}
-	}
-	//Tests for whites
-	for(int i = 0; i < 4; ++i){
-		for(int j = 0; j < 4; ++j){
-			if((number[j] == guess[i]) && (mask[i] == 0)){
-				++white;
+	if(cont == 1){
+		//Tests for reds, and set mask position to 1 to make that digit off limits
+		for(int i = 0; i < 4; ++i){
+			if(number[i] == guess[i]){
+				++red;
+				mask[i] = 1;
 			}
 		}
+		//Tests for whites
+		for(int i = 0; i < 4; ++i){
+			for(int j = 0; j < 4; ++j){
+				if(number[j] == guess[i] && mask[j] == 0){
+					++white;
+					mask[i] = 1;
+					break;
+				}
+			}
+		}
+		printf("%d red, ", red);
+		printf("%d white\n", white);
+		return 1;
 	}
-	printf("%d red, ", red);
-	printf("%d white\n", white);
-	printf("cont is %d\n", cont);
-	return cont;
+	else{
+		return 0;
+	}
+
 }
 
 
