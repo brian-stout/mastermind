@@ -6,12 +6,13 @@
 
 int compare(int number[], int guess[]);
 void user_input(int *px);
+int is_in_intarray(int a, int b[], int index);
 
 int main(void)
 {
 	int cont = 1;
 	int guess_count = 0;
-	int number[4] = {8,0,6,8};
+	int number[4] = {5,3,5,5};
 	int guess[4], *guess_ptr;
 	guess_ptr = guess;
 /*
@@ -40,7 +41,7 @@ int main(void)
 
 void user_input(int *px)
 {
-	char guess[8];
+	char guess[32];
 	int cont = 1;
 
 	while(cont){
@@ -72,7 +73,8 @@ int compare(int number[], int guess[])
 	int white = 0;
 	int mask[] = {0,0,0,0};
 	int cont = 0;
-
+	int valid_guesses[32];
+	int valid_guesses_size = 0;
 
 	//Tests to see if the numbers are equal before running other logic
 	for(int i = 0; i < 4; ++i){
@@ -91,16 +93,14 @@ int compare(int number[], int guess[])
 		//Tests for whites
 		for(int i = 0; i < 4; ++i){
 			for(int j = 0; j < 4; ++j){
-				//Prevents reds from being counted as whites and sets a mask for that index
-				if(j != i && number[i] == guess[j] && mask[i] == 0){
-					white += 1;
-					mask[i] = 1;
-					break;
-				}
-				//Uses the index set previously to avoid whites from being counted again.
-				else if(j == i && number[i] == guess[j] && mask[i] == 0){
-					break;
-				}
+				if(mask[i] == 0 && guess[i] == number[j]){
+					if(is_in_intarray(guess[i], valid_guesses, valid_guesses_size) == 0){
+						++white;
+						++valid_guesses_size;
+						mask[i] = 1;
+						break;
+					}
+				}		
 			}
 		}
 		printf("Number: %d%d%d%d \n", number[0],number[1],number[2],number[3]);
@@ -113,6 +113,19 @@ int compare(int number[], int guess[])
 		return 0;
 	}
 }
+
+int is_in_intarray(int a, int b[], int index)
+{
+	int r = 0;
+	for(int i = 0; i < index; ++i){
+		if(b[i] == a){
+			r = 1;
+			printf("Match \n");
+		}
+	}
+	return r;
+}
+
 
 
 
