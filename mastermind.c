@@ -3,7 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-void compare(int number[], int guess[]);
+void compare(int number[], char guess[]);
+int user_input(int number[]);
 
 int main(void)
 {
@@ -16,29 +17,35 @@ int main(void)
 	number[1] = 3;
 	number[2] = 4;
 	number[3] = 5;
-	int guess[] = {2,3,0,0};
-	compare(number, guess);
+	printf("The number is %d%d%d%d \n", number[0],number[1],number[2],number[3]);
+	user_input(number);
+
 
 
 }
 
 
-/*
-	while(game == 1){
-		char guess[8];
-		printf("Enter your guess: ");
-		fgets(guess, sizeof(guess), stdin);
-		if(strlen(guess) != 5){
-			printf("\nEnter a four digit number \n");
-		}
-		else{
-			buf[4] = '\0';
-		}
+int user_input(int number[])
+{
+	char guess[5];
+	printf("Enter your guess: ");
+	fgets(guess, sizeof(guess), stdin);
+	printf("Debug: guess is currently %s \n", guess);
+	printf("Debug: guess is this long %zd \n", strlen(guess));
+	if(strlen(guess) != 4){
+		printf("\nEnter a four digit number \n");
+		return 0;
+	}
+	else{
+		guess[4] = '\0';
+		printf("debug: this is guess %s \n", guess);
+		//compare(number, guess);
+	}
 	
 }
-*/
 
-void compare(int number[], int guess[])
+
+void compare(int number[], char guess[])
 {
 	int red = 0;
 	int white = 0;
@@ -48,6 +55,7 @@ void compare(int number[], int guess[])
 		}
 	}
 	printf("%d red, ", red);
+	printf("%d white\n", white);
 	
 }
 
