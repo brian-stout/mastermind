@@ -10,15 +10,15 @@ int user_input(int number[]);
 int main(void)
 {
 	int guess_count = 0;
-	int number[4] = {9,9,5,1};
+	int number[4] = {5,3,5,5};
 /*
 	srand(time(NULL));
 
 	for(int i = 0; i < 4 ; ++i){
 		number[i] = rand() % 10;
 	}
-*/
 
+*/
 	guess_count = user_input(number);
 //TODO: Fix the grammar and stuffs
 	printf("Congratulations!  You guessed the correct number in %d "
@@ -51,7 +51,6 @@ int user_input(int number[])
 		else{
 			printf("Character must be 4 digits\n");
 		}
-
 	}
 	return guess_count;
 
@@ -65,7 +64,7 @@ int compare(int number[], char guess[])
 	int white = 0;
 	int mask[] = {0,0,0,0};
 	int cont = 0;
-	int valid_white;
+
 
 	//Tests to see if the numbers are equal before running other logic
 	for(int i = 0; i < 4; ++i){
@@ -84,10 +83,14 @@ int compare(int number[], char guess[])
 		//Tests for whites
 		for(int i = 0; i < 4; ++i){
 			for(int j = 0; j < 4; ++j){
-				if(number[j] == guess[i] && mask[j] == 0 && guess[i] != valid_white){
-					++white;
+				//Prevents reds from being counted as whites and sets a mask for that index
+				if(j != i && number[i] == guess[j] && mask[i] == 0){
+					white += 1;
 					mask[i] = 1;
-					valid_white = guess[j];
+					break;
+				}
+				//Uses the index set previously to avoid whites from being counted again.
+				else if(j == i && number[i] == guess[j] && mask[i] == 0){
 					break;
 				}
 			}
