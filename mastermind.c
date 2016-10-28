@@ -10,7 +10,7 @@ int user_input(int number[]);
 int main(void)
 {
 	int guess_count = 0;
-	int number[4] = {6,1,5,8};
+	int number[4] = {9,9,5,1};
 /*
 	srand(time(NULL));
 
@@ -65,6 +65,7 @@ int compare(int number[], char guess[])
 	int white = 0;
 	int mask[] = {0,0,0,0};
 	int cont = 0;
+	int valid_white;
 
 	//Tests to see if the numbers are equal before running other logic
 	for(int i = 0; i < 4; ++i){
@@ -83,9 +84,10 @@ int compare(int number[], char guess[])
 		//Tests for whites
 		for(int i = 0; i < 4; ++i){
 			for(int j = 0; j < 4; ++j){
-				if(number[j] == guess[i] && mask[j] == 0){
+				if(number[j] == guess[i] && mask[j] == 0 && guess[i] != valid_white){
 					++white;
 					mask[i] = 1;
+					valid_white = guess[j];
 					break;
 				}
 			}
