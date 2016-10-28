@@ -59,15 +59,12 @@ int compare(int number[], char guess[])
 	int red = 0;
 	int white = 0;
 	int mask[] = {0,0,0,0};
-	int cont;
+	int cont = 0;
 
 	//Tests to see if the numbers are equal before running other logic
 	for(int i = 0; i < 4; ++i){
 		if(number[i] != guess[i]){
 			cont = 1;
-		}
-		else{
-			cont = 0;
 		}
 	}
 	//Tests for reds, and set mask position to 1 to make that digit off limits
@@ -87,8 +84,8 @@ int compare(int number[], char guess[])
 	}
 	printf("%d red, ", red);
 	printf("%d white\n", white);
+	printf("cont is %d\n", cont);
 	return cont;
-
 }
 
 
