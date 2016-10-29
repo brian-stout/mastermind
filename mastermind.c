@@ -13,15 +13,18 @@ int main(void)
 {
 	int cont = 1;
 	int guess_count = 0;
-	int number[4] = {8,2,4,2};
+	int number[4] = {1,2,4,2};
 	int guess[4], *guess_ptr;
 	guess_ptr = guess;
 
+/*
 	srand(time(NULL));
 
 	for(int i = 0; i < 4 ; ++i){
 		number[i] = rand() % 10;
 	}
+
+*/
 
 	while(cont){
 		++guess_count;
@@ -29,9 +32,15 @@ int main(void)
 		cont = compare(number, guess);
 	}
 
-//TODO: Fix the grammar and stuffs
+	//On the off chance you guess correctly the first time, this will fix it
+	char grammar[] = "attempts!";
+	if(guess_count == 1){
+		grammar[7] = '!';
+		grammar[8] = '\0';
+	}
+
 	printf("Congratulations!  You guessed the correct number in %d "
-		   "attempts!\n", guess_count);
+		   "%s\n", guess_count, grammar);
 
  
 
