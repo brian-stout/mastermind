@@ -14,21 +14,23 @@ int in_intarray(int a, int b[], int index);
 
 int main(void)
 {
-	int cont = 1;
-	int guess_count = 0;
-	int number[4];
-	int guess[4], *guess_ptr;
-	guess_ptr = guess;
 
 	//Sets the seed for the random number generator
 	srand(time(NULL));
+
 	//Randomly generates four digits 0-9 and assigns them to an int array
+	int number[4];
 	for(int i = 0; i < 4 ; ++i){
 		number[i] = rand() % 10;
 	}
 
 	//The main logic for the program.  compare() returns a 0
 	//Upon a correct guess
+	int cont = 1;
+	int guess_count = 0;
+	int guess[4], *guess_ptr;
+	guess_ptr = guess;
+
 	while(cont){
 		++guess_count;
 		user_input(guess_ptr);
@@ -65,7 +67,6 @@ void user_input(int *px)
 {
 
 	char guess[32];
-	int alpha_flag = 0;
 
 	while(1){
 		printf("Enter your guess: ");
@@ -77,6 +78,9 @@ void user_input(int *px)
 			}
 			continue;
 		}
+
+		int alpha_flag = 0;
+
 		//Turns the unicode character to it's appropiate number
 		for(int i = 0; i < 4; ++i){
 			guess[i] -= '0';
@@ -97,8 +101,6 @@ void user_input(int *px)
 			printf("Invalid Input\n");
 		}
 	}
-
-
 }
 
 
@@ -112,8 +114,8 @@ void user_input(int *px)
 *	The function returns a value of 0 when number and guess are exactly the same
 *		letting the program know to continue because the user has won
 *
-*	TODO: Remove reds from valid guesses and just find the amount of reds
-*		that are also whites and subtract that from the white count
+*
+*
 */
 int compare(int number[], int guess[])
 {
