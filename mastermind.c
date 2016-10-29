@@ -98,7 +98,7 @@ void user_input(int *px)
 			break;
 		}
 		else{
-			printf("Invalid Input\n");
+			printf("Invalid input!\n");
 		}
 	}
 }
