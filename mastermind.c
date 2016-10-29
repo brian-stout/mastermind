@@ -1,31 +1,34 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <ctype.h>
 
 
 int compare(int number[], int guess[]);
+
 void user_input(int *px);
+
 int in_intarray(int a, int b[], int index);
+
 
 int main(void)
 {
 	int cont = 1;
 	int guess_count = 0;
-	int number[4] = {1,2,4,2};
+	int number[4];
 	int guess[4], *guess_ptr;
 	guess_ptr = guess;
 
-/*
+	//Sets the seed for the random number generator
 	srand(time(NULL));
-
+	//Randomly generates four digits 0-9 and assigns them to an int array
 	for(int i = 0; i < 4 ; ++i){
 		number[i] = rand() % 10;
 	}
 
-*/
-
+	//The main logic for the program.  compare() returns a 0
+	//Upon a correct guess
 	while(cont){
 		++guess_count;
 		user_input(guess_ptr);
@@ -41,9 +44,6 @@ int main(void)
 
 	printf("Congratulations!  You guessed the correct number in %d "
 		   "%s\n", guess_count, grammar);
-
- 
-
 }
 
 
