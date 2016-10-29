@@ -6,23 +6,23 @@
 
 int compare(int number[], int guess[]);
 void user_input(int *px);
-int is_in_intarray(int a, int b[], int index);
+int in_intarray(int a, int b[], int index);
 
 int main(void)
 {
 	int cont = 1;
 	int guess_count = 0;
-	int number[4] = {5,3,5,5};
+	int number[4] = {8,2,4,2};
 	int guess[4], *guess_ptr;
 	guess_ptr = guess;
-/*
+
 	srand(time(NULL));
 
 	for(int i = 0; i < 4 ; ++i){
 		number[i] = rand() % 10;
 	}
 
-*/
+
 
 	while(cont){
 		++guess_count;
@@ -71,7 +71,6 @@ int compare(int number[], int guess[])
 {
 	int red = 0;
 	int white = 0;
-	int mask[] = {0,0,0,0};
 	int cont = 0;
 	int valid_guesses[32];
 	int valid_guesses_size = 0;
@@ -87,21 +86,19 @@ int compare(int number[], int guess[])
 		for(int i = 0; i < 4; ++i){
 			if(number[i] == guess[i]){
 				++red;
-				mask[i] = 1;
+				valid_guesses[valid_guesses_size] = guess[i];
+				++valid_guesses_size;
 			}
 		}
 		//Tests for whites
 		for(int i = 0; i < 4; ++i){
-			for(int j = 0; j < 4; ++j){
-				if(mask[i] == 0 && guess[i] == number[j]){
-					if(is_in_intarray(guess[i], valid_guesses, valid_guesses_size) == 0){
+			if(in_intarray(guess[i], number, 4) == 1){
+				if(in_intarray(guess[i], valid_guesses, valid_guesses_size) == 0){
 						++white;
-						++valid_guesses_size;
-						mask[i] = 1;
-						break;
-					}
-				}		
-			}
+						valid_guesses[valid_guesses_size] = guess[i];
+						++valid_guesses_size;			
+				}
+			}	
 		}
 		printf("Number: %d%d%d%d \n", number[0],number[1],number[2],number[3]);
 		printf("Guess:  %d%d%d%d \n", guess[0],guess[1],guess[2],guess[3]);
@@ -114,7 +111,7 @@ int compare(int number[], int guess[])
 	}
 }
 
-int is_in_intarray(int a, int b[], int index)
+int in_intarray(int a, int b[], int index)
 {
 	int r = 0;
 	for(int i = 0; i < index; ++i){
