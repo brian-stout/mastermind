@@ -56,22 +56,22 @@ void user_input(int *px)
 	while(1){
 		printf("Enter your guess: ");
 		fgets(guess, sizeof(guess), stdin);
-		if(strlen(guess) == 5){
-			//Turns the unicode character to it's appropiate number
-			guess[4] = '\0';
-			for(int i = 0; i < 4; ++i){
-				guess[i] -= '0';
+		if(strlen(guess) != 5){
+			while(guess[strlen(guess)-1] != '\n'){
+				fgets(guess, sizeof(guess), stdin);
 			}
-			//assigns the int array's ptr that was passed in the function the correct values
-			px[0] = guess[0];
-			px[1] = guess[1];
-			px[2] = guess[2];
-			px[3] = guess[3];
-			break;
 		}
-		else{
-			printf("Character must be 4 digits\n");
+
+		//Turns the unicode character to it's appropiate number
+		for(int i = 0; i < 4; ++i){
+			guess[i] -= '0';
 		}
+		//assigns the int array's ptr that was passed in the function the correct values
+		px[0] = guess[0];
+		px[1] = guess[1];
+		px[2] = guess[2];
+		px[3] = guess[3];
+		break;
 	}
 }
 
