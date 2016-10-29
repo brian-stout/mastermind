@@ -84,13 +84,13 @@ void user_input(int *px)
 		//Turns the unicode character to it's appropiate number
 		for(int i = 0; i < 4; ++i){
 			guess[i] -= '0';
-			//Tests to see if user inputed a char and if so let the program know
+			//Tests to see if user inputed a char
 			if(guess[i] > 9){
 				alpha_flag = 1;
 			}
 		}
 		if(alpha_flag == 0){
-			//assigns the int array's ptr that was passed in the function the correct values
+			//assigns the guess values using the ptr passed in
 			px[0] = guess[0];
 			px[1] = guess[1];
 			px[2] = guess[2];
@@ -111,8 +111,9 @@ void user_input(int *px)
 *		of the rules of a game, a correctly checked number does not evalute
 *		positively being "consumed."
 *	
-*	The function returns a value of 0 when number and guess are exactly the same
-*		letting the program know to continue because the user has won
+*	The function returns a value of 0 when number and guess are exactly 
+*		the same letting the program know to continue because the
+*		 user has won.
 *
 *
 *
@@ -135,7 +136,7 @@ int compare(int number[], int guess[])
 	int valid_guesses_size = 0;
 
 	if(cont == 1){
-		//Tests for reds, adds valid values to valid guesses "consuming" the digit
+		//Tests for reds, adds valid values to array "consuming" the digit
 		for(int i = 0; i < 4; ++i){
 			if(number[i] == guess[i]){
 				++red;
