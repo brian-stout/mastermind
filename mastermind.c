@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 
 
 int compare(int number[], int guess[]);
@@ -22,12 +23,9 @@ int main(void)
 		number[i] = rand() % 10;
 	}
 
-
-
 	while(cont){
 		++guess_count;
 		user_input(guess_ptr);
-		printf("%d%d%d%d\n", guess[0], guess[1], guess[2], guess[3]);
 		cont = compare(number, guess);
 	}
 
@@ -39,40 +37,59 @@ int main(void)
 
 }
 
+
 /**
 *	This function asks for user input appropiate for the program, handles
 *		error checking ensuring the user is inputting valid guesses, and
-*		convers the char type inputs to an int array
+*		converts the char type inputs to an int array
 *
 *	The user_input() function takes a pointer from the main() function
 *		so that it can pass back each index of the array back so the main()
 *		function can handle most of the program flow logic.
+*
+*	The error handling logic was created with the aide of McMaster who
+*		attributed the code to Liam's scribble on the white board. In
+*		addition I added a check to see if a value is greater than 9
+*		which means it's an ASCII Character or invalid input
 */
 void user_input(int *px)
 {
 
 	char guess[32];
+	int alpha_flag = 0;
 
 	while(1){
 		printf("Enter your guess: ");
 		fgets(guess, sizeof(guess), stdin);
 		if(strlen(guess) != 5){
+			printf("Invalid input!\n");
 			while(guess[strlen(guess)-1] != '\n'){
 				fgets(guess, sizeof(guess), stdin);
 			}
+			continue;
 		}
-
 		//Turns the unicode character to it's appropiate number
 		for(int i = 0; i < 4; ++i){
 			guess[i] -= '0';
+			//Tests to see if user inputed a char and if so let the program know
+			if(guess[i] > 9){
+				alpha_flag = 1;
+			}
 		}
-		//assigns the int array's ptr that was passed in the function the correct values
-		px[0] = guess[0];
-		px[1] = guess[1];
-		px[2] = guess[2];
-		px[3] = guess[3];
-		break;
+		if(alpha_flag == 0){
+			//assigns the int array's ptr that was passed in the function the correct values
+			px[0] = guess[0];
+			px[1] = guess[1];
+			px[2] = guess[2];
+			px[3] = guess[3];
+			break;
+		}
+		else{
+			printf("Invalid Input\n");
+		}
 	}
+
+
 }
 
 
@@ -153,7 +170,3 @@ int in_intarray(int a, int b[], int index)
 	}
 	return r;
 }
-
-
-
-
